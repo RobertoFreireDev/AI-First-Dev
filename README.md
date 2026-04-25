@@ -40,3 +40,4 @@ Changes on a shared library will affect all the applications that depend on it.
 
 - [monorepo](https://nx.dev/blog/monorepo-is-not-monolith#misconceptions)
 - [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
+- [Enterprise Spec Driven Development](https://www.infoq.com/articles/enterprise-spec-driven-development/)
