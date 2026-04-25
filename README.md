@@ -2,6 +2,12 @@
 
 AI-first development is a paradigm where artificial intelligence is the core driver of the software lifecycle, rather than an afterthought, placing AI agents at the center of planning, coding, and testing
 
+## Spec Driven Development
+
+<p align="center">
+  <img src="./imagens/specdrivendevelopmentworkflow.png?raw=true">
+</p>
+
 ## Monorepo
 
 Monorepo-style development is a software development approach where:
