@@ -10,6 +10,10 @@ Monorepo-style development is a software development approach where:
 - The projects can depend on each other, so they can share code.
 - When you make a change, you do not rebuild or retest every project in the monorepo. Instead, you only rebuild and retest the projects that can be affected by your change.
 
+### Suggestion:
+
+Use Nx. Smart Monorepo Build System & CI
+
 ### Risks:
 
 #### Repository governance risk:
@@ -38,6 +42,7 @@ Changes on a shared library will affect all the applications that depend on it.
 
 ## References:
 
+- [nx.dev](https://nx.dev/docs/getting-started/intro)
 - [monorepo](https://nx.dev/blog/monorepo-is-not-monolith#misconceptions)
 - [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
 - [Enterprise Spec Driven Development](https://www.infoq.com/articles/enterprise-spec-driven-development/)
