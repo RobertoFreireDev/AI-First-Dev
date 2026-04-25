@@ -24,6 +24,12 @@ When multiple projects share a monorepo without clear boundaries, the codebase c
 
 **Solution:** In .NET (C#), split modules into separate projects (assemblies) to enforce boundaries, define clear namespaces per module, and mark implementation types as `internal` by default so they are inaccessible outside the module. Complement this with architectural tests to automatically detect and prevent boundary violations.
 
+#### Codebase is too big for AI
+
+A common concern is that AI coding agents can't handle monorepos because there's too much code, too many projects, too much context
+
+**Solution:** Configure Tasks with well-defined scopes and constrained context, ensuring the agent operates only within a specific module or set of relevant files instead of the entire codebase
+
 ## References:
 
 - [monorepo](https://nx.dev/blog/monorepo-is-not-monolith#misconceptions)
