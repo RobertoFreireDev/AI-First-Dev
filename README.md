@@ -14,11 +14,17 @@ Monorepo-style development is a software development approach where:
 
 #### Repository governance risk:
 
-In a monorepo, without proper code ownership and review policies, other teams may modify code without the owning team’s awareness.
+Without proper code ownership and review policies, other teams may modify code without the owning team’s awareness.
 
-Solution: Implement CODEOWNERS on GitHub. Owners are automatically requested for review based on matching rules. PR cannot be merged without owner approval
+**Solution:** Use CODEOWNERS in GitHub. It automatically assigns reviewers (individuals or teams) based on matching rules for directories, files, or extensions. With branch protection enabled, pull requests can’t be merged without approval from the designated owners.
 
+#### Big Ball of Mud:
+
+When multiple projects share a monorepo without clear boundaries, the codebase can quickly become a Big Ball of Mud—a tangled, hard-to-understand system where dependencies are unclear, changes feel risky, and overall maintainability declines
+
+**Solution:** In .NET (C#), split modules into separate projects (assemblies) to enforce boundaries, define clear namespaces per module, and mark implementation types as `internal` by default so they are inaccessible outside the module. Complement this with architectural tests to automatically detect and prevent boundary violations.
 
 ## References:
 
 - [monorepo](https://nx.dev/blog/monorepo-is-not-monolith#misconceptions)
+- [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
