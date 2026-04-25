@@ -30,6 +30,12 @@ A common concern is that AI coding agents can't handle monorepos because there's
 
 **Solution:** Configure Tasks with well-defined scopes and constrained context, ensuring the agent operates only within a specific module or set of relevant files instead of the entire codebase
 
+#### Large-scale changes
+
+Changes on a shared library will affect all the applications that depend on it.
+
+**Solution:** In .NET, publish shared code as versioned nuget packages and require consumers to opt into upgrades rather than inheriting changes automatically. Also, CI pipelines should run cross-project tests and impact analysis to detect breaking changes early
+
 ## References:
 
 - [monorepo](https://nx.dev/blog/monorepo-is-not-monolith#misconceptions)
