@@ -4,16 +4,71 @@ AI-first development is a paradigm where artificial intelligence is the core dri
 
 ## Agent in action
 
-Copilot first discovers what it can use (green box on image → Agent, Instructions, Prompt, Skill, Hook Discovery).
+### Overview
 
-Then applies that to your request (Red box on image).
+Copilot first discovers what it can use (green box on image): Agent, Instructions, Prompt, Skill, Hook Discovery.
 
-Then the child step-by-step actions (blue box on image) the agent took after receiving your request: workflow execution, showing how the agent searches for the file(s), reads it, decides what to change and implement changes.
+Then applies that to your request (red box on image): "I want to remove the delete endpoint in SubscriptionController".
+
+Then the child step-by-step actions (blue box on image) the agent takes after receiving your request: workflow execution showing how it searches for files, reads them, decides what to change, and implements those changes.
 
 <p align="center">
   <img src="./imagens/agentinaction1.png?raw=true">
 </p>
 
+### First communication with AI model
+
+It sends 4 sections: System, Input messages, Tools and user request.
+
+<p align="center">
+  <img src="./imagens/agentinaction2.png?raw=true">
+</p>
+
+- chat:claude-haiku-4.5 · claude-haiku-4.5 · success · 2,942ms
+- Input tokens: 21,294
+- Output tokens: 148
+- Total tokens: 21,442
+
+#### System
+
+* Defines the AI as **GitHub Copilot** using **Claude Haiku 4.5**, acting as an expert coding assistant in VS Code.
+* Must follow strict rules: obey user instructions, avoid harmful/copyrighted content, keep responses short and impersonal.
+* Emphasizes **action over suggestion**: proactively read files, run tools, and implement changes until the task is fully complete.
+* Encourages **efficient workflow**: gather context quickly, parallelize reads/searches, and track multi-step tasks with a todo system.
+* Provides detailed **tool usage guidelines** (file ops, search, terminal, notebooks, browser).
+* Enforces **concise communication style** with minimal explanations unless necessary.
+* Includes **memory system** (user, session, repo) for storing useful insights.
+* Introduces **skills system**: must load relevant `SKILL.md` files before acting when applicable.
+* Supports **subagents** (e.g., Explore) for codebase analysis.
+
+#### Input messages
+
+* Environment: Windows, working in a **monorepo (Nx + NestJS)** project called *fakeflix*.
+* Workspace contains multiple apps (`billing-api`, `monolith`) and domain packages (`billing`, `content`, `identity`, `recommendations`, etc.).
+* Tools available include running tasks (e.g., `npm build`) and file editing/search.
+* No stored memory (user, session, or repo).
+* Instructions emphasize efficient file edits, batching changes, and using relevant skills when applicable.
+* **User goal:** remove the *delete endpoint* from `SubscriptionController`.
+
+#### Tools
+
+* Defines a large set of **tools for interacting with a VS Code workspace** (files, search, terminal, browser, notebooks, etc.).
+* Covers **file operations** (create, read, edit, search, replace) and **code navigation** (grep, semantic search, symbol usage/rename).
+* Includes **execution tools** (run tasks, terminal commands, notebooks).
+* Provides **project/setup utilities** (workspace creation, extensions, VS Code API docs).
+* Adds **browser automation tools** (open, click, navigate, scrape pages).
+* Supports **task management** (`manage_todo_list`) and **memory system** for persistence.
+* Emphasizes **efficient workflows**: batch edits, avoid redundant operations, and use the right tool for each scenario.
+
+#### User request
+
+* Environment: Windows, working in a **large Nx + NestJS monorepo** (`fakeflix`) with multiple apps and domain packages.
+* Workspace includes services like `billing`, `content`, `identity`, `recommendations`, plus shared modules and docs.
+* A build task (`npm build` → `nest build`) is available.
+* No stored memory (user, session, repo).
+* Instructions stress **precise file edits**, including enough context, and **batching multiple edits efficiently**.
+* Must check and load relevant **skills (SKILL.md)** before acting when applicable.
+* **User goal:** remove the `DELETE` endpoint from `SubscriptionController`.
 
 ## AGENTS.md
 
