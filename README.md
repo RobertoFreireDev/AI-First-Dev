@@ -4,8 +4,11 @@ AI-first development is a paradigm where artificial intelligence is the core dri
 
 ## Agent in action
 
-Copilot first decides how to think and what it can do (green box on image -> Agent, Instructions, Prompt, Skill, Hook Discovery). Then applies that to your request (Red box on image).
+Copilot first discovers what it can use (green box on image → Agent, Instructions, Prompt, Skill, Hook Discovery).
 
+Then applies that to your request (Red box on image).
+
+Then the child step-by-step actions (blue box on image) the agent took after receiving your request: workflow execution, showing how the agent searches for the file(s), reads it, decides what to change and implement changes.
 
 <p align="center">
   <img src="./imagens/agentinaction1.png?raw=true">
