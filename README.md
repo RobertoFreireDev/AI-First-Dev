@@ -9,27 +9,38 @@ AI-first development is a paradigm where artificial intelligence is the core dri
 
 ### Overview
 
-Copilot first discovers what it can use (green box on image): Agent, Instructions, Prompt, Skill, Hook Discovery.
+Copilot first discovers what it can use (green box on image): Agent, Instructions, Slash commands, Skill, Hook Discovery.
 
 Then applies that to your request (red box on image): "I want to remove the delete endpoint in SubscriptionController".
 
-Then the child step-by-step actions (blue box on image) the agent takes after receiving your request: workflow execution showing how it searches for files, reads them, decides what to change, and implements those changes.
+Then the step-by-step child actions (blue box in the image) represent what the agent does after receiving your request: executing the workflow, searching for files, reading them, deciding what to change, and implementing those changes.
 
 <p align="center">
 <img src="./imagens/agentinaction1.png?raw=true">
 </p>
 
-### First request to AI model
+### Communication with AI models
 
-It sends in 4 sections: 
+Each request sends a payload in 4 sections:
 
-* System
-* Input messages
-* Tools
-* User request
+* System → instructions, rules, and environment setup
+* Input messages → conversation history, context, files, etc.
+* Tools → definitions of functions/actions the model can call
+* User request → the current prompt
+
+Each request returns a response in 2 sections:
+
+* Response
+* Reasoning
 
 <p align="center">
-<img src="./imagens/agentinaction2.png?raw=true">
+    <img src="./imagens/copilotaimodelresponse.png?raw=true">
+</p>
+
+### First request to AI model
+
+<p align="center">
+    <img src="./imagens/agentinaction2.png?raw=true">
 </p>
 
 - chat:claude-haiku-4.5 · claude-haiku-4.5 · success · 2,942ms
