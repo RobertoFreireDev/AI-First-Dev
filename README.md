@@ -2,6 +2,11 @@
 
 AI-first development is a paradigm where artificial intelligence is the core driver of the software lifecycle, rather than an afterthought, placing AI agents at the center of planning, coding, and testing
 
+## TO DO
+
+- Explain Spec Driven Development
+- Apply Spec Driven Development in run-aspnetcore-microservices project
+
 <details>
   <summary>Agent in action</summary>
 
