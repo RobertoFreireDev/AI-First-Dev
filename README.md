@@ -7,6 +7,8 @@ AI-first development is a paradigm where artificial intelligence is the core dri
 
 ## Agent in action
 
+This is a simplified summary based on tests performed with GitHub Copilot in VS Code.
+
 ### Overview
 
 Copilot first discovers what it can use (green box on image): Agent, Instructions, Slash commands, Skill, Hook Discovery.
