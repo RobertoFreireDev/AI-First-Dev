@@ -2,6 +2,16 @@
 
 AI-first development is a paradigm where artificial intelligence is the core driver of the software lifecycle, rather than an afterthought, placing AI agents at the center of planning, coding, and testing
 
+## Agent in action
+
+Copilot first decides how to think and what it can do (green box on image -> Agent, Instructions, Prompt, Skill, Hook Discovery). Then applies that to your request (Red box on image).
+
+
+<p align="center">
+  <img src="./imagens/agentinaction1.png?raw=true">
+</p>
+
+
 ## AGENTS.md
 
 **Problem:** AI agent doesn’t know your project. AI agent needs different kinds of information: what is the build command? What is the style guide? How do you run an individual test? Which architectural patterns should be followed?
@@ -15,6 +25,12 @@ AGENTS.md is an emerging, ecosystem-agnostic convention for documenting projects
 In a monorepo, global rules are typically defined at the root, with more specific or overriding rules defined within each package.
 
 Each tool (e.g., Cursor, Claude Code) defines its own rules for prioritizing and discovering instruction files (such as "AGENTS.md", "CLAUDE.md", etc.). These tools may also automatically include those files in the agent’s context for new sessions, but the behavior is tool-specific and not standardized
+
+## Rules
+
+Rules are the content. AGENTS.md is the container.
+
+Rules are individual behavioral instructions. They can live anywhere: system prompt, config files, inline instructions or inside AGENTS.md
 
 ## SKILL.md
 
