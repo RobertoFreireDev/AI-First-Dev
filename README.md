@@ -376,6 +376,10 @@ Changes on a shared library will affect all the applications that depend on it.
 
 </details>
 
+## Disclaimer
+
+This is a simplified summary. This repository may contain errors, inaccuracies, or incomplete information.
+
 ## References:
 
 - [AGENTS.md](https://agents.md/)
