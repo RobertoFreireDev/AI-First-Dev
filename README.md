@@ -92,6 +92,53 @@ From this point, the process becomes a loop: the VS Code agent and AI model repe
   <img src="./imagens/agentinaction4.png?raw=true">
 </p>
 
+#### Example of iterations in the Loop
+
+<p align="center">
+  <img src="./imagens/agentinaction5.png?raw=true">
+</p>
+
+* I asked for "SubscriptionController"
+* Local MCP call file_search for "query": "**/SubscriptionController*" resulted on "No files found"
+* Another call to AI model used extra 21,004 tokens just to inform tool_result was "No files found"
+* AI response was to call MCP grep_search
+* After next local MCP call grep_search works, it informs AI model the full path of the 3 matches
+* AI respond that found "...subscription.controller.ts" and ask to make a local call read_file between lines 1 and 100
+* etc
+
+#### Example of memory in section Input messages
+
+Example of memory kept between AI model calls under the same request. it is sent via **section Input messages**
+
+* OS: Windows
+* Workspace: `fakeflix` monorepo (NestJS + Nx style)
+* Project structure: modular domains (`billing`, `content`, `identity`, etc.)
+* Task available: `npm run build` (Nest build)
+* Memory state:
+  * User memory: empty
+  * Session memory: empty
+  * Repo memory: empty
+* Instructions:
+  * Use tools to find/edit code
+  * Include context when editing files
+  * Prefer batch edits
+  * Don’t create extra docs
+  * Check for skills if relevant
+* User request:
+  * Remove **delete endpoint** from `SubscriptionController`
+* Execution flow:
+  * `file_search` → no results
+  * `grep_search` → found file
+* File location:
+  * `package/billing/http/rest/controller/subscription.controller.ts`
+* Key observation:
+  * First search failed (too strict), second worked (broader search)
+
+#### Agent plays a critical role
+
+The agent plays a critical role because it acts as the “orchestrator” that gives structure and meaning to the AI model’s input. Instead of the model receiving a raw user request in isolation, the agent enriches it with context—like workspace details, available tools, prior steps, and instructions—so the model can make informed decisions
+
+
 ## AGENTS.md
 
 **Problem:** AI agent doesn’t know your project. AI agent needs different kinds of information: what is the build command? What is the style guide? How do you run an individual test? Which architectural patterns should be followed?
