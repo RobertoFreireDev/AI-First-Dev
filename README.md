@@ -16,9 +16,14 @@ Then the child step-by-step actions (blue box on image) the agent takes after re
   <img src="./imagens/agentinaction1.png?raw=true">
 </p>
 
-### First communication with AI model
+### First request to AI model
 
-It sends 4 sections: System, Input messages, Tools and user request.
+It sends in 4 sections: 
+
+* System
+* Input messages
+* Tools
+* User request
 
 <p align="center">
   <img src="./imagens/agentinaction2.png?raw=true">
@@ -69,6 +74,23 @@ It sends 4 sections: System, Input messages, Tools and user request.
 * Instructions stress **precise file edits**, including enough context, and **batching multiple edits efficiently**.
 * Must check and load relevant **skills (SKILL.md)** before acting when applicable.
 * **User goal:** remove the `DELETE` endpoint from `SubscriptionController`.
+
+### First response from AI model
+
+<p align="center">
+  <img src="./imagens/agentinaction3.png?raw=true">
+</p>
+
+* Assistant plans to remove the delete endpoint from `SubscriptionController`.
+* Starts by **searching the workspace** for the controller file using a file search tool.
+
+### Loop
+
+From this point, the process becomes a loop: the VS Code agent and AI model repeatedly use tools (e.g., search, read, edit via MCP) to gather context and apply changes until the task is fully completed.
+
+<p align="center">
+  <img src="./imagens/agentinaction4.png?raw=true">
+</p>
 
 ## AGENTS.md
 
