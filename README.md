@@ -2,6 +2,20 @@
 
 AI-first development is a paradigm where artificial intelligence is the core driver of the software lifecycle, rather than an afterthought, placing AI agents at the center of planning, coding, and testing
 
+## AGENTS.md
+
+**Problem:** AI agent doesn’t know your project. AI agent needs different kinds of information: what is the build command? What is the style guide? How do you run an individual test? Which architectural patterns should be followed?
+
+**Solution:** Create a “README for machines.” That’s what AGENTS.md (Markdown file) is about—and the entire ecosystem of Agent Skills that is emerging around it. 
+
+The core principle: be concise and practical. No long texts explaining the project’s philosophy. The agent needs clear rules and executable commands.
+
+AGENTS.md is an emerging, ecosystem-agnostic convention for documenting projects for AI agents, but it is not an official standard. Some tools—like Claude Code—use their own formats (e.g., CLAUDE.md) as the primary source of instructions
+
+In a monorepo, global rules are typically defined at the root, with more specific or overriding rules defined within each package.
+
+Each tool (e.g., Cursor, Claude Code) defines its own rules for prioritizing and discovering instruction files (such as "AGENTS.md", "CLAUDE.md", etc.). These tools may also automatically include those files in the agent’s context for new sessions, but the behavior is tool-specific and not standardized
+
 ## Spec Driven Development
 
 <p align="center">
@@ -48,6 +62,8 @@ Changes on a shared library will affect all the applications that depend on it.
 
 ## References:
 
+- [AGENTS.md](https://agents.md/)
+- [AGENTS.md and Agent Skills](https://www.techleads.club/c/blog/agents-md-e-agent-skills-por-debaixo-dos-panos-dos-ai-coding-agents)
 - [nx.dev](https://nx.dev/docs/getting-started/intro)
 - [monorepo](https://nx.dev/blog/monorepo-is-not-monolith#misconceptions)
 - [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
