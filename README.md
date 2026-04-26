@@ -16,6 +16,59 @@ In a monorepo, global rules are typically defined at the root, with more specifi
 
 Each tool (e.g., Cursor, Claude Code) defines its own rules for prioritizing and discovering instruction files (such as "AGENTS.md", "CLAUDE.md", etc.). These tools may also automatically include those files in the agent’s context for new sessions, but the behavior is tool-specific and not standardized
 
+## SKILL.md
+
+AGENTS.md is the project’s manual, while Agent Skills are modular, on-demand behaviors. A Skill is a directory with a SKILL.md file containing specialized instructions—typically organized with sections like “What I do” and “When to use me.”
+
+### Progressive Disclosure in AI Agent Skill Design
+
+Progressive Disclosure keeps prompts small and efficient, avoids wasting tokens on unused information and scales well for large projects and many skills.
+
+- Layer 1 (Indexing) is always present and lightweight. It tells the agent what Agent Skill exist without loading full details.
+- Layer 2 (Activation) loads detailed instructions only when the AI model calls skill.
+- Layer 3 (Reference) Only if AI model calls skill, it loads deeper resources (files, examples, scripts).
+
+```mermaid
+flowchart LR
+%% 1. Initialization
+subgraph INIT["1. Initialization"]
+    A["Session Start<br/>User opens the terminal"]
+    B["Discovers AGENTS.md<br/>global + project"]
+    C["Discovers Skills<br/>.opencode/.claude/.agents/URLs"]
+
+    A --> B --> C
+
+    A_NOTE["AGENTS.md:<br/>build, test,<br/>style guide"]
+    C_NOTE["Skills:<br/>git-release,<br/>cloudflare, ..."]
+end
+
+%% 2. Assembly
+subgraph BUILD["2. Assembly"]
+    D["Builds System Prompt<br/>Base + Environment + AGENTS.md"]
+    E["Registers Tools<br/>read, write, bash,<br/>grep, skill(+index)"]
+    F["Ready for Interaction"]
+
+    D --> E --> F
+end
+
+%% 3. Interaction + Execution
+subgraph EXEC["3. Interaction + Execution"]
+    G["User Message<br/>'Deploy to Cloudflare Workers'"]
+    H["LLM Processes<br/>Sees 'cloudflare' skill<br/>Calls skill()"]
+    I["Skill Loaded<br/>Instructions + files<br/>injected into context"]
+
+    G --> H --> I
+end
+
+%% Final Execution
+J["Informed Execution<br/>Model runs with AGENTS.md (conventions)<br/>+ Skill (specific instructions)"]
+
+%% Connections between sections
+C --> D
+F --> G
+I --> J
+```
+
 ## Spec Driven Development
 
 <p align="center">
