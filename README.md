@@ -69,6 +69,94 @@ F --> G
 I --> J
 ```
 
+## MCP
+
+MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems.
+
+Using MCP, AI applications like Claude or ChatGPT can connect to data sources (e.g. local files, databases), tools (e.g. search engines, calculators) and workflows (e.g. specialized prompts)—enabling them to access key information and perform tasks.
+
+Think of MCP like a USB-C port for AI applications. Just as USB-C provides a standardized way to connect electronic devices, MCP provides a standardized way to connect AI applications to external systems.
+
+## AGENT, SKILLS and MCP
+
+```mermaid
+flowchart LR
+
+%% --- AGENTS.MD ---
+subgraph AGENTS["AGENTS.md — 'Who you are'"]
+    A1["Always present"]
+
+    A2["Purpose:
+- Project rules & conventions
+- How the agent should work
+- Architecture context
+- Mandatory standards"]
+
+    A3["Correct Examples:
+- Use TypeScript strict mode
+- Follow clean architecture
+- Log errors to Sentry"]
+
+    A4["Do NOT include:
+- How to deploy (→ Skills)
+- Debug steps (→ Skills)
+- External connections (→ MCP)"]
+
+    A5["Think: 'Employee handbook'
+What the agent must know FROM THE START"]
+end
+
+
+%% --- SKILLS ---
+subgraph SKILLS["Skills — 'What you can do'"]
+    B1["On demand"]
+
+    B2["Purpose:
+- Workflows & procedures
+- What to do in specific situations
+- Execute complex tasks
+- Invoked via command"]
+
+    B3["Correct Examples:
+- Deploy workflow
+- Debug API workflow
+- Create component workflow"]
+
+    B4["Do NOT include:
+- General rules (→ AGENTS.md)
+- API conventions (→ AGENTS.md)
+- Code style rules (→ AGENTS.md)"]
+
+    B5["Think: 'Onboarding procedures'
+Used WHEN NEEDED"]
+end
+
+
+%% --- MCP ---
+subgraph MCP["MCP — 'What you can access'"]
+    C1["When connected"]
+
+    C2["Purpose:
+- External tools & APIs
+- Databases & cloud services
+- Google Drive, Slack, GitHub
+- Access resources outside code"]
+
+    C3["Correct Examples:
+- Google Drive access
+- PostgreSQL queries & migrations
+- Slack messaging"]
+
+    C4["Do NOT use for:
+- Code rules (→ AGENTS.md)
+- Internal workflows (→ Skills)
+- Things without external APIs"]
+
+    C5["Think: 'IT infrastructure'
+Used WHEN ACCESS IS REQUIRED"]
+end
+```
+
 ## Spec Driven Development
 
 <p align="center">
@@ -117,6 +205,7 @@ Changes on a shared library will affect all the applications that depend on it.
 
 - [AGENTS.md](https://agents.md/)
 - [AGENTS.md and Agent Skills](https://www.techleads.club/c/blog/agents-md-e-agent-skills-por-debaixo-dos-panos-dos-ai-coding-agents)
+- [MCP](https://modelcontextprotocol.io/docs/getting-started/intro)
 - [nx.dev](https://nx.dev/docs/getting-started/intro)
 - [monorepo](https://nx.dev/blog/monorepo-is-not-monolith#misconceptions)
 - [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
