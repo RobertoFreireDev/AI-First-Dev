@@ -124,7 +124,10 @@ From this point, the process becomes a loop: the VS Code agent and AI model repe
 
 #### Example of memory in section Input messages
 
-Example of memory kept between AI model calls under the same request. it is sent via **section Input messages**
+The orchestrator (agent/runtime) rebuilds the input context each time
+It may include previous tool outputs, messages, or state explicitly.
+
+This information is sent via **section Input messages**
 
 * OS: Windows
 * Workspace: `fakeflix` monorepo (NestJS + Nx style)
