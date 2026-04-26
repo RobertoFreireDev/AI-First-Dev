@@ -2,6 +2,9 @@
 
 AI-first development is a paradigm where artificial intelligence is the core driver of the software lifecycle, rather than an afterthought, placing AI agents at the center of planning, coding, and testing
 
+<details>
+  <summary>Agent in action</summary>
+
 ## Agent in action
 
 ### Overview
@@ -13,7 +16,7 @@ Then applies that to your request (red box on image): "I want to remove the dele
 Then the child step-by-step actions (blue box on image) the agent takes after receiving your request: workflow execution showing how it searches for files, reads them, decides what to change, and implements those changes.
 
 <p align="center">
-  <img src="./imagens/agentinaction1.png?raw=true">
+<img src="./imagens/agentinaction1.png?raw=true">
 </p>
 
 ### First request to AI model
@@ -26,7 +29,7 @@ It sends in 4 sections:
 * User request
 
 <p align="center">
-  <img src="./imagens/agentinaction2.png?raw=true">
+<img src="./imagens/agentinaction2.png?raw=true">
 </p>
 
 - chat:claude-haiku-4.5 · claude-haiku-4.5 · success · 2,942ms
@@ -78,7 +81,7 @@ It sends in 4 sections:
 ### First response from AI model
 
 <p align="center">
-  <img src="./imagens/agentinaction3.png?raw=true">
+<img src="./imagens/agentinaction3.png?raw=true">
 </p>
 
 * Assistant plans to remove the delete endpoint from `SubscriptionController`.
@@ -89,13 +92,13 @@ It sends in 4 sections:
 From this point, the process becomes a loop: the VS Code agent and AI model repeatedly use tools (e.g., search, read, edit via MCP) to gather context and apply changes until the task is fully completed.
 
 <p align="center">
-  <img src="./imagens/agentinaction4.png?raw=true">
+<img src="./imagens/agentinaction4.png?raw=true">
 </p>
 
 #### Example of iterations in the Loop
 
 <p align="center">
-  <img src="./imagens/agentinaction5.png?raw=true">
+<img src="./imagens/agentinaction5.png?raw=true">
 </p>
 
 * I asked for "SubscriptionController"
@@ -115,29 +118,33 @@ Example of memory kept between AI model calls under the same request. it is sent
 * Project structure: modular domains (`billing`, `content`, `identity`, etc.)
 * Task available: `npm run build` (Nest build)
 * Memory state:
-  * User memory: empty
-  * Session memory: empty
-  * Repo memory: empty
+* User memory: empty
+* Session memory: empty
+* Repo memory: empty
 * Instructions:
-  * Use tools to find/edit code
-  * Include context when editing files
-  * Prefer batch edits
-  * Don’t create extra docs
-  * Check for skills if relevant
+* Use tools to find/edit code
+* Include context when editing files
+* Prefer batch edits
+* Don’t create extra docs
+* Check for skills if relevant
 * User request:
-  * Remove **delete endpoint** from `SubscriptionController`
+* Remove **delete endpoint** from `SubscriptionController`
 * Execution flow:
-  * `file_search` → no results
-  * `grep_search` → found file
+* `file_search` → no results
+* `grep_search` → found file
 * File location:
-  * `package/billing/http/rest/controller/subscription.controller.ts`
+* `package/billing/http/rest/controller/subscription.controller.ts`
 * Key observation:
-  * First search failed (too strict), second worked (broader search)
+* First search failed (too strict), second worked (broader search)
 
 #### Agent plays a critical role
 
 The agent plays a critical role because it acts as the “orchestrator” that gives structure and meaning to the AI model’s input. Instead of the model receiving a raw user request in isolation, the agent enriches it with context—like workspace details, available tools, prior steps, and instructions—so the model can make informed decisions
 
+</details>
+
+<details>
+  <summary>AGENTS.md, RULES, SKILLS and MCPs</summary>
 
 ## AGENTS.md
 
@@ -300,11 +307,21 @@ Used WHEN ACCESS IS REQUIRED"]
 end
 ```
 
+</details>
+
+<details>
+  <summary>Spec Driven Development</summary>
+
 ## Spec Driven Development
 
 <p align="center">
   <img src="./imagens/specdrivendevelopmentworkflow.png?raw=true">
 </p>
+
+</details>
+
+<details>
+  <summary>Monorepo</summary>
 
 ## Monorepo
 
@@ -343,6 +360,8 @@ A common concern is that AI coding agents can't handle monorepos because there's
 Changes on a shared library will affect all the applications that depend on it.
 
 **Solution:** In .NET, publish shared code as versioned nuget packages and require consumers to opt into upgrades rather than inheriting changes automatically. Also, CI pipelines should run cross-project tests and impact analysis to detect breaking changes early
+
+</details>
 
 ## References:
 
