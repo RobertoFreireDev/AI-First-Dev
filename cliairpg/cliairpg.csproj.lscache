@@ -60,6 +60,7 @@ obj/Debug/net10.0/
  cliairpg.AssemblyInfo.cs
 Program.cs
 src/Core/
+ Enemy.cs
  GameLoop.cs
  GameState.cs
  Inventory.cs
@@ -70,6 +71,9 @@ src/Core/
 src/LLM/
  OpenRouterClient.cs
  PromptTemplates.cs
+src/Systems/
+ CombatEngine.cs
+ EncounterService.cs
 src/UI/
  ConsoleRenderer.cs
  InputHandler.cs

@@ -45,7 +45,7 @@ public static class InputHandler
 
     public static string GetActionInput()
     {
-        ConsoleRenderer.PrintMessage("> ", false);
+        ConsoleRenderer.PrintMessage("Enter action name or number: ", false);
         var input = Console.ReadLine();
         return string.IsNullOrWhiteSpace(input) ? "look" : input.ToLower().Trim();
     }

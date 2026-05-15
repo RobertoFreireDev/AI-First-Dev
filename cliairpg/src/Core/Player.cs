@@ -24,6 +24,11 @@ public class Player
     public int Gold { get; set; }
     public Inventory Inventory { get; set; }
 
+    public int Attack => Strength + Level * 2;
+    public int Defense => Dexterity + Level;
+    public int MagicPower => Intelligence + Level;
+    public int ExperienceToNextLevel => Level * 100;
+
     public Player(string name, CharacterClass characterClass)
     {
         Name = name;
@@ -61,6 +66,23 @@ public class Player
     public void GainExperience(int amount)
     {
         Experience += amount;
+        while (Experience >= ExperienceToNextLevel)
+        {
+            Experience -= ExperienceToNextLevel;
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        Level++;
+        MaxHealth += 20;
+        Health = MaxHealth;
+        MaxMana += 10;
+        Mana = MaxMana;
+        Strength += 2;
+        Intelligence += 2;
+        Dexterity += 2;
     }
 
     public void AddGold(int amount)

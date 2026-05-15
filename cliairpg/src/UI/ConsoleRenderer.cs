@@ -82,7 +82,13 @@ public static class ConsoleRenderer
         int index = 1;
         foreach (var item in player.Inventory.Items)
         {
-            Console.WriteLine($"{index}. {item.Name} (Weight: {item.Weight})");
+            string details = $"(Weight: {item.Weight}";
+            if (item.HealAmount > 0)
+            {
+                details += $", Heal: {item.HealAmount}";
+            }
+            details += $", Type: {item.Type})";
+            Console.WriteLine($"{index}. {item.Name} {details}");
             Console.WriteLine($"   {item.Description}");
             index++;
         }

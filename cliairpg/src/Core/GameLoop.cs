@@ -1,4 +1,5 @@
 using CLIAirpg.Core;
+using CLIAirpg.Systems;
 using CLIAirpg.UI;
 
 namespace CLIAirpg.Core;
@@ -17,7 +18,7 @@ public class GameLoop
     public void Start()
     {
         ConsoleRenderer.ClearScreen();
-        ConsoleRenderer.PrintTitle("CLI AIR RPG - Version 0.1");
+        ConsoleRenderer.PrintTitle("CLI AIR RPG - Version 0.2");
 
         // Initialize game
         InitializeGame();
@@ -55,8 +56,11 @@ public class GameLoop
         var dagger = new Item("dagger", "Iron Dagger", "A basic iron dagger", 5);
         player.Inventory.AddItem(dagger);
 
-        var potion = new Item("health_potion", "Health Potion", "Restores 30 HP", 2);
+        var potion = new Item("health_potion", "Health Potion", "Restores 30 HP", 2, value: 5, healAmount: 30, type: "Consumable");
         player.Inventory.AddItem(potion);
+
+        var leatherArmor = new Item("leather_armor", "Leather Armor", "Light armor that slightly reduces damage.", 10, value: 12, type: "Armor");
+        player.Inventory.AddItem(leatherArmor);
 
         ConsoleRenderer.ClearScreen();
         ConsoleRenderer.PrintSuccess($"Welcome, {player.Name} the {player.Class}!");
@@ -123,16 +127,20 @@ public class GameLoop
 
         ConsoleRenderer.PrintSection("Actions");
         Console.WriteLine("1. look - Look around (refresh description)");
-        Console.WriteLine("2. inventory - Check your inventory");
-        Console.WriteLine("3. status - Full character status");
-        Console.WriteLine("4. travel - Travel to connected location");
-        Console.WriteLine("5. quit - Exit the game");
+        Console.WriteLine("2. explore - Search for enemies or hidden items");
+        Console.WriteLine("3. inventory - Check your inventory");
+        Console.WriteLine("4. use - Use a consumable item");
+        Console.WriteLine("5. status - Full character status");
+        Console.WriteLine("6. travel - Travel to connected location");
+        Console.WriteLine("7. quit - Exit the game");
     }
 
     private void ProcessAction(string action)
     {
         if (_gameState.Player == null || _gameState.CurrentLocation == null)
             return;
+
+        action = NormalizeAction(action);
 
         switch (action)
         {
@@ -141,9 +149,17 @@ public class GameLoop
                 ConsoleRenderer.Pause();
                 break;
 
+            case "explore":
+                HandleExplore();
+                break;
+
             case "inventory":
                 ConsoleRenderer.PrintInventory(_gameState.Player);
                 ConsoleRenderer.Pause();
+                break;
+
+            case "use":
+                HandleUseItem();
                 break;
 
             case "status":
@@ -159,7 +175,7 @@ public class GameLoop
                 break;
 
             default:
-                ConsoleRenderer.PrintError("Unknown action. Try: look, inventory, status, travel, or quit");
+                ConsoleRenderer.PrintError("Unknown action. Try: look, explore, inventory, use, status, travel, or quit");
                 ConsoleRenderer.Pause();
                 break;
         }
@@ -195,6 +211,7 @@ public class GameLoop
             _gameState.CurrentLocation = selectedLocation;
             ConsoleRenderer.ClearScreen();
             ConsoleRenderer.PrintSuccess($"You travel to {selectedLocation.Name}");
+            TryLocationEncounter(selectedLocation);
             ConsoleRenderer.Pause();
         }
     }
@@ -236,6 +253,125 @@ public class GameLoop
         }
 
         ConsoleRenderer.Pause();
+    }
+
+    private void HandleExplore()
+    {
+        if (_gameState.CurrentLocation == null)
+            return;
+
+        var enemy = EncounterService.CreateEncounter(_gameState.CurrentLocation.Id);
+        if (enemy == null)
+        {
+            ConsoleRenderer.PrintMessage("You search the area carefully but find nothing dangerous.");
+            ConsoleRenderer.Pause();
+            return;
+        }
+
+        ConsoleRenderer.ClearScreen();
+        ConsoleRenderer.PrintWarning($"A wild {enemy.Name} appears!");
+        var outcome = CombatEngine.EngageCombat(_gameState.Player, enemy);
+
+        if (outcome == CombatOutcome.Victory)
+        {
+            AwardVictory(enemy);
+        }
+        else if (outcome == CombatOutcome.Defeat)
+        {
+            _gameState.IsGameRunning = false;
+            _shouldExit = true;
+        }
+    }
+
+    private void HandleUseItem()
+    {
+        if (_gameState.Player == null)
+            return;
+
+        var player = _gameState.Player;
+        var potion = player.Inventory.Items.FirstOrDefault(item => item.Id == "health_potion" && item.HealAmount > 0);
+        if (potion == null)
+        {
+            ConsoleRenderer.PrintError("You don't have a health potion to use.");
+            ConsoleRenderer.Pause();
+            return;
+        }
+
+        player.Heal(potion.HealAmount);
+        player.Inventory.RemoveItem(potion.Id);
+        ConsoleRenderer.PrintSuccess($"You drink a {potion.Name} and restore {potion.HealAmount} HP.");
+        ConsoleRenderer.Pause();
+    }
+
+    private void TryLocationEncounter(Location location)
+    {
+        var enemy = EncounterService.CreateEncounter(location.Id);
+        if (enemy == null)
+        {
+            return;
+        }
+
+        ConsoleRenderer.PrintWarning($"As you arrive, {enemy.Name} attacks!");
+        var outcome = CombatEngine.EngageCombat(_gameState.Player, enemy);
+
+        if (outcome == CombatOutcome.Victory)
+        {
+            AwardVictory(enemy);
+        }
+        else if (outcome == CombatOutcome.Defeat)
+        {
+            _gameState.IsGameRunning = false;
+            _shouldExit = true;
+        }
+    }
+
+    private void AwardVictory(Enemy enemy)
+    {
+        if (_gameState.Player == null)
+            return;
+
+        var player = _gameState.Player;
+        player.GainExperience(enemy.ExperienceReward);
+        player.AddGold(enemy.GoldReward);
+
+        ConsoleRenderer.PrintSuccess($"You gained {enemy.ExperienceReward} experience and {enemy.GoldReward} gold.");
+
+        if (enemy.Loot.Count > 0)
+        {
+            foreach (var item in enemy.Loot)
+            {
+                if (player.Inventory.AddItem(item))
+                {
+                    ConsoleRenderer.PrintSuccess($"You loot {item.Name}.");
+                }
+                else
+                {
+                    ConsoleRenderer.PrintWarning($"Your inventory is full and you leave {item.Name} behind.");
+                }
+            }
+        }
+
+        if (player.Level > 1)
+        {
+            ConsoleRenderer.PrintSuccess($"You reached level {player.Level}! Your power grows.");
+        }
+
+        ConsoleRenderer.Pause();
+    }
+
+    private string NormalizeAction(string action)
+    {
+        return action switch
+        {
+            "1" => "look",
+            "2" => "explore",
+            "3" => "inventory",
+            "4" => "use",
+            "5" => "status",
+            "6" => "travel",
+            "7" => "quit",
+            _ => action
+        };
     }
 
     private void HandleQuit()
