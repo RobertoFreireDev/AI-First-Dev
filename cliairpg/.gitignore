@@ -1,0 +1,77 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio temporary files, build results, and generated files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# ASP.NET Scaffolding
+ScaffoldedFolder/
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# npm packages
+node_modules/
+
+# Resharper
+_ReSharper*/
+*.ReSharper*
+*.DotSettings.user
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono auto generated files
+mono_crash.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.log
+*.tmp
+*.cache
+*.ilk
+*.pdb
+*.idb
+*.class
+*.dll
+*.exe
+*.app
+*.log
+*.vspscc
+*.vssscc
+
+# Rider caches
+.idea/
+*.sln.iml
+
+# dotnet core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# MSBuild generated files
+*.generated.cs
+
+# Local history for Visual Studio
+.vscode/**/history
+
+# User-specific files for VS Code
+.vscode/*.code-workspace
